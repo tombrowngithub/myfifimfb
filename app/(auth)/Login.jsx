@@ -7,11 +7,15 @@ import {signInWithEmailAndPassword} from "firebase/auth"
 import {collection, query, where, getDocs} from "firebase/firestore"
 import {auth, db} from "../../utility/firebaseConfig"
 import Loader from "../../components/Loader";
+import {useGlobalStore} from "../../context/globalStore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = () => {
     const [loading, setLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
     const [form, setForm]= useState({phone: "", password: ""})
+
+    const {setUser} = useGlobalStore()
 
 
     async function handleLogin() {
@@ -38,10 +42,12 @@ const Login = () => {
             const email = userDoc.data().email;
 
             // Log in with email and password
-            const result = await signInWithEmailAndPassword(auth, email, form.password);
+            const credential = await signInWithEmailAndPassword(auth, email, form.password);
             const user = auth.currentUser;
             if (user.emailVerified) {
-                console.log(result)
+                //console.log(result)
+                setUser(credential.user)
+                await AsyncStorage.setItem('userAuth', JSON.stringify(credential.user))
                 router.replace('/Home');
             } else {
                 Alert.alert('Error', 'Email not verified. Please check your inbox.');
@@ -92,7 +98,7 @@ const Login = () => {
                 <TextInput
                     onChangeText={(e)=>setForm({...form, phone: e})}
                     className="flex-1 font-pmedium ml-2"
-                    placeholder="Phone number"
+                    placeholder="Account number"
                     keyboardType="numeric"
                 />
             </View>

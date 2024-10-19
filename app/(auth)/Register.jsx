@@ -150,7 +150,6 @@ const Register = () => {
                         onChangeText={(e) => setForm({...form, phone: e})}
                         className="flex-1 font-pmedium ml-2"
                         placeholder="Phone number"
-                        keyboardType="numeric"
                     />
                 </View>
 

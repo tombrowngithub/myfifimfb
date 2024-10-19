@@ -44,7 +44,8 @@ import wifiIcon from "../assets/icons/wifiIcon.png";
 import user from "../assets/icons/user.png";
 import country from "../assets/icons/country.png";
 import calendar from "../assets/icons/calendar.png";
-
+//add new icons phone 2
+import phone2 from "../assets/icons/phone2.png"
 export default {
   accountLimit,
   arrowRM,
@@ -91,4 +92,5 @@ export default {
   user,
   country,
   calendar,
+  phone2
 };
